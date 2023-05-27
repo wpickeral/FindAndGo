@@ -14,5 +14,9 @@
     <ItemGroup>
       <Folder Include="wwwroot\images\" />
     </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="JObject" Version="1.0.0" />
+      <PackageReference Include="System.Net.Http.Json" Version="8.0.0-preview.4.23259.5" />
+    </ItemGroup>
 
 </Project>
