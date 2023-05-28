@@ -1,0 +1,28 @@
+﻿@model IEnumerable<LocationModel>
+
+@{
+    ViewData["Title"] = "Stores";
+}
+
+<div class="text-center my-6">
+    <div class="my-auto">
+        <h1 class="text-gray-800 font-light text-xl mt-2">Select a Store</h1>
+    </div>
+
+    <ul>
+        @foreach (var location in @Model)
+        {
+            <li class="mb-4">
+                <a
+                    asp-controller="StoreDetails"
+                    asp-route-id="@location.LocationId"
+                    asp-action="Index">
+                    @location.Name
+                </a>
+                <p>@location.Address</p>
+                <div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

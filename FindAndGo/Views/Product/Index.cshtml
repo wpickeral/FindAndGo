@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ProductModel>
+
+@{
+    ViewData["Title"] = "Stores";
+}
+
+<div class="text-center my-6">
+    <h1 class="text-gray-800 font-light text-xl mt-2 mb-4 mx-auto">Search Results</h1>
+    <ul class="mx-auto">
+        @foreach (var product in @Model)
+        {
+            <li class="mb-4 flex">
+                <img src="@product.FeaturedImage" alt="product featured image"/>
+                <div>
+                    <p>@product.Brand</p>
+                    <p>@product.Description</p>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
