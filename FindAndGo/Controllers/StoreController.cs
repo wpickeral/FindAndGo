@@ -23,8 +23,6 @@ public class StoreController : Controller
 
         var token = Request.Cookies["token"];
 
-        Console.WriteLine("zipcode");
-        Console.WriteLine("You are in the store Controller");
         var client = new HttpClient();
         client.DefaultRequestHeaders.Clear();
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
