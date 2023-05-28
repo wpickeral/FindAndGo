@@ -9,4 +9,6 @@ public class ProductModel
     public string Brand { get; set; }
     public string Description { get; set; }
     public string FeaturedImage { get; set; }
+    public string RegularPrice { get; set; }
+    public string PromoPrice { get; set; }
 }

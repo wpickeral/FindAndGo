@@ -9,11 +9,14 @@ public class ProductController : Controller
     // GET
     public async Task<IActionResult> Index()
     {
+        //  https://developer.kroger.com/reference#operation/productGet
+
         var searchTerm = HttpContext.Request.Query["searchTerm"];
         var locationId = HttpContext.Request.Query["locationId"];
+        var fullfillment = "ais"; // available in store
 
         var productSearchUrl =
-            $"https://api-ce.kroger.com/v1/products?filter.term={searchTerm}&filter.locationId={locationId}";
+            $"https://api-ce.kroger.com/v1/products?filter.term={searchTerm}&filter.locationId={locationId}&filter.fulfillment={fullfillment}";
 
         var client = new HttpClient();
         var token = Request.Cookies["token"];
