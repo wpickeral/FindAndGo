@@ -35,10 +35,9 @@ public class ProductController : Controller
             var product = new ProductModel
             {
                 ProductId = prod["productId"].ToString(),
-                Brand = prod["brand"].ToString(),
                 Description = prod["description"].ToString(),
                 // The first item in the array is the featured imaged
-                FeaturedImage = prod["images"][0]["sizes"][2]["url"].ToString(), // medium size
+                FeaturedImage = prod["images"][0]["sizes"][2]["url"].ToString(), // large size
                 Size = prod["items"][0]["size"].ToString()
             };
 
@@ -47,10 +46,7 @@ public class ProductController : Controller
             {
                 var aisleLocation = new AisleLocation()
                 {
-                    BayNumber = aisleLocations[0]["bayNumber"].ToString(),
                     Description = aisleLocations[0]["description"].ToString(),
-                    Side = aisleLocations[0]["side"].ToString(),
-                    ShelfNumber = aisleLocations[0]["shelfNumber"].ToString()
                 };
 
                 product.AisleLocation = aisleLocation;

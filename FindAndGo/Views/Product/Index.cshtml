@@ -6,26 +6,25 @@
 
 <div class="text-center my-6">
     <h1 class="text-gray-800 font-light text-xl mt-2 mb-4 mx-auto">Search Results</h1>
-    <ul class="mx-auto">
+    <ul class="grid grid-cols-2 gap-8">
         @foreach (var product in @Model)
         {
-            <li class="mb-4 flex">
-                <img src="@product.FeaturedImage" alt="product featured image"/>
-                <div>
-                    <p>@product.Brand</p>
+            <li class="mb-4 grid grid-cols-3 gap-8 p-4 rounded-md shadow-md h-50 max-h-50">
+                <img src="@product.FeaturedImage" class="cols-span-1 mr-8" alt="product featured image"/>
+                <div class="text-start col-span-2">
                     <p>@product.Description</p>
                     <p>@product.Size</p>
 
                     @if (@product.AisleLocation != null)
                     {
-                        <p>@product.AisleLocation.Description</p>
-                        <p>@product.AisleLocation.BayNumber</p>
-                        <p>@product.AisleLocation.Side</p>
-                        <p>@product.AisleLocation.ShelfNumber</p>
+                        <div class="flex gap-3 mt-4">
+                            <p class="font-bold">Aisle/Area</p>
+                            <p class="text-emerald-500 font-bold">@product.AisleLocation.Description</p>
+                        </div>
                     }
                     else
                     {
-                        <p>Location not available</p>
+                        <p class="mt-4">Location not available</p>
                     }
                 </div>
             </li>
