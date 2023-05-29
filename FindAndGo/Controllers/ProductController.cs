@@ -32,15 +32,31 @@ public class ProductController : Controller
 
         foreach (var prod in resultsAsJson)
         {
-            products.Add(new ProductModel
+            var product = new ProductModel
             {
                 ProductId = prod["productId"].ToString(),
-                AisleLocations = prod["aisleLocations"],
                 Brand = prod["brand"].ToString(),
                 Description = prod["description"].ToString(),
                 // The first item in the array is the featured imaged
-                FeaturedImage = prod["images"][0]["sizes"][2]["url"].ToString() // medium size
-            });
+                FeaturedImage = prod["images"][0]["sizes"][2]["url"].ToString(), // medium size
+                Size = prod["items"][0]["size"].ToString()
+            };
+
+            var aisleLocations = prod["aisleLocations"];
+            if (aisleLocations.Any())
+            {
+                var aisleLocation = new AisleLocation()
+                {
+                    BayNumber = aisleLocations[0]["bayNumber"].ToString(),
+                    Description = aisleLocations[0]["description"].ToString(),
+                    Side = aisleLocations[0]["side"].ToString(),
+                    ShelfNumber = aisleLocations[0]["shelfNumber"].ToString()
+                };
+
+                product.AisleLocation = aisleLocation;
+            }
+
+            products.Add(product);
         }
 
         return View(products);

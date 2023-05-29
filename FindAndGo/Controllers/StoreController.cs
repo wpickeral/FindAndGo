@@ -27,7 +27,16 @@ public class StoreController : Controller
         client.DefaultRequestHeaders.Clear();
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
-        var getLocations = await client.GetStringAsync(locationListUrl);
+        string getLocations;
+        try
+        {
+            getLocations = await client.GetStringAsync(locationListUrl);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return View("NoResultsFound");
+        }
 
         var resultsAsJson = JObject.Parse(getLocations)["data"].ToArray();
 

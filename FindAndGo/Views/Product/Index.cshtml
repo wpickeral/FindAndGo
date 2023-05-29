@@ -14,6 +14,19 @@
                 <div>
                     <p>@product.Brand</p>
                     <p>@product.Description</p>
+                    <p>@product.Size</p>
+
+                    @if (@product.AisleLocation != null)
+                    {
+                        <p>@product.AisleLocation.Description</p>
+                        <p>@product.AisleLocation.BayNumber</p>
+                        <p>@product.AisleLocation.Side</p>
+                        <p>@product.AisleLocation.ShelfNumber</p>
+                    }
+                    else
+                    {
+                        <p>Location not available</p>
+                    }
                 </div>
             </li>
         }
