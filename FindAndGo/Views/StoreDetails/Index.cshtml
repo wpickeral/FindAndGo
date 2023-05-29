@@ -5,15 +5,14 @@
 }
 
 <div class="text-center my-6">
-
-    <div class="mb-4">
-        <p>@Model.Name</p>
-        <p>@Model.Address</p>
-        <div>
-        </div>
-    </div>
     <div class="my-auto">
-        <h1 class="text-gray-800 font-light text-xl mt-2">Search for a product</h1>
+        <h1 class="text-gray-800 font-light text-xl mt-2 aria-hidden">
+            Search for a product at <br/>
+            <span>
+                <p>@Model.Name</p>
+                <p>@Model.Address</p>
+            </span>
+        </h1>
     </div>
     <form class="w-96 mx-auto mt-6" asp-controller="StoreDetails" asp-action="Search" method="post">
         <input type="hidden" id="locationId" name="locationId" value="@Model.LocationId"/>
