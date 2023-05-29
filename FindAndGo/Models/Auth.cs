@@ -17,10 +17,9 @@ public class Auth
         // https://developer.kroger.com/reference#operation/authorizationCode
         var authString = $"{clientId}:{clientSecret}";
         // Base 64 encode the auth string
-        var authStringTextBytes = System.Text.Encoding.UTF8.GetBytes(authString);
-        var base64EncodedAuthString = Convert.ToBase64String(authStringTextBytes);
+        var authStringEncoded = StringToBase64String(authString);
         // Add the authorization header 
-        client.DefaultRequestHeaders.Add("Authorization", $"Basic {base64EncodedAuthString}");
+        client.DefaultRequestHeaders.Add("Authorization", $"Basic {authStringEncoded}");
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         // Create the scopes object to include with the post request
@@ -44,5 +43,11 @@ public class Auth
             Console.WriteLine("Error getting access token");
             return null;
         }
+    }
+
+    private static string StringToBase64String(string str)
+    {
+        var authStringTextBytes = System.Text.Encoding.UTF8.GetBytes(str);
+        return Convert.ToBase64String(authStringTextBytes);
     }
 }

@@ -23,7 +23,6 @@ public class HomeController : Controller
         // If the access token is null we get a new token and and set it to the AccessToken
         AccessToken ??= await new Auth().GetAccessToken();
 
-        Response.Cookies.Delete("token");
         Response.Cookies.Append("token", AccessToken.ToString());
         return View();
     }

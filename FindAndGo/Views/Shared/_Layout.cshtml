@@ -6,22 +6,21 @@
     <title>@ViewData["Title"] - FindAndGo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/FindAndGo.styles.css" asp-append-version="true"/>
 </head>
-<body class="h-full">
-<header class="w-full flex justify-center flex-col items-center mb-5">
-    <img class="h-24 mt-6" src="~/images/logo.png" alt="Find & Go">
+<body class="h-full flex flex-col">
+<header class="w-full flex justify-center flex-col items-center mb-5 pb-6 border-b-[1px] border-gray-200">
+    <a asp-controller="Home" asp-action="Index">
+        <img class="h-24 mt-6" src="~/images/logo.png" alt="Find & Go">
+    </a>
 </header>
-<main>
+<main class="mb-auto">
     @RenderBody()
 </main>
-<footer class="border-top footer text-muted">
-    <div class="container mx-3">
-        &copy; 2023 - FindAndGo
-    </div>
+<footer class="text-muted border-t-[1px] border-gray-200">
+    <p class="m-3 text-sm text-gray-600">
+        &copy; 2023 - Find & Go
+    </p>
 </footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
