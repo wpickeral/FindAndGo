@@ -37,7 +37,7 @@ public class ProductController : Controller
                 ProductId = prod["productId"].ToString(),
                 Description = prod["description"].ToString(),
                 // The first item in the array is the featured imaged
-                FeaturedImage = prod["images"][0]["sizes"][2]["url"].ToString(), // large size
+                FeaturedImage = prod["images"][0]["sizes"][1]["url"].ToString(), // large size
                 Size = prod["items"][0]["size"].ToString()
             };
 
