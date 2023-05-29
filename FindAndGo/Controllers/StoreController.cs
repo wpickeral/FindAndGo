@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices.JavaScript;
-using System.Text.Json.Nodes;
 using FindAndGo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
@@ -40,7 +38,7 @@ public class StoreController : Controller
 
         var resultsAsJson = JObject.Parse(getLocations)["data"].ToArray();
 
-        var locations = new List<LocationModel>();
+        var locations = new List<StoreModel>();
 
         foreach (var location in resultsAsJson)
         {
@@ -53,7 +51,7 @@ public class StoreController : Controller
             var longitude = location["geolocation"]["longitude"].ToString();
             var latitude = location["geolocation"]["latitude"].ToString();
 
-            locations.Add(new LocationModel()
+            locations.Add(new StoreModel()
             {
                 LocationId = locationId,
                 Address = addressLine1,

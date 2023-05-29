@@ -18,7 +18,7 @@ public class StoreDetailsController : Controller
         var getLocations = await client.GetStringAsync(locationDetailsUrl);
         var resultsAsJson = JObject.Parse(getLocations)["data"];
 
-        LocationModel locationModel = new LocationModel()
+        StoreModel storeModel = new StoreModel()
         {
             LocationId = resultsAsJson["locationId"].ToString(),
             Address = resultsAsJson["address"]["addressLine1"].ToString(),
@@ -30,7 +30,7 @@ public class StoreDetailsController : Controller
             Latitude = resultsAsJson["geolocation"]["latitude"].ToString()
         };
 
-        return View(locationModel);
+        return View(storeModel);
     }
 
     [HttpPost]

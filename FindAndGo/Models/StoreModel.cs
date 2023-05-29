@@ -1,6 +1,6 @@
 namespace FindAndGo.Models;
 
-public class LocationModel
+public class StoreModel
 {
     public string LocationId { get; set; }
     public string Address { get; set; }

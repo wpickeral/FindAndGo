@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LocationModel>
+﻿@model IEnumerable<StoreModel>
 
 @{
     ViewData["Title"] = "Stores";
@@ -9,11 +9,12 @@
         <h1 class="text-gray-800 font-light text-xl mt-2">Select a Store</h1>
     </div>
 
-    <ul>
+    <ul role="list" class="mt-8 divide-y divide-gray-200 max-w-[500px] mx-auto">
         @foreach (var location in @Model)
         {
-            <li class="mb-4">
+            <li class="px-4 py-6 sm:px-0">
                 <a
+                    class="font-medium  text-indigo-600 hover:text-indigo-500 block mb-4"
                     asp-controller="StoreDetails"
                     asp-route-id="@location.LocationId"
                     asp-action="Index">
