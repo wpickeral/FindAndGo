@@ -7,7 +7,7 @@
 <div class="bg-white">
     <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
         <div class="md:flex md:items-center md:justify-between mb-16 items-center">
-            <h2 class="text-2xl font-bold tracking-tight text-gray-900">Search Results</h2>
+            <h2 class="text-xl font-bold tracking-tight text-gray-900">Search Results</h2>
             <form class="w-96 mx-auto flex items-center gap-3" asp-controller="StoreDetails" asp-action="Search" method="post">
                 <input type="hidden" id="locationId" name="locationId" value="@Context.Request.Cookies["locationId"]"/>
                 <label for="searchTerm" class="ml-px block pl-4 text-sm font-medium leading-6 text-gray-700 sr-only"></label>
