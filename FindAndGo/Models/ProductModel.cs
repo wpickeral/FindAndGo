@@ -2,10 +2,10 @@ namespace FindAndGo.Models;
 
 public class ProductModel
 {
-    public string? ProductId { get; set; }
-    public string? Description { get; set; }
-    public string? FeaturedImage { get; set; }
-    public string? Size { get; set; }
+    public required string ProductId { get; init; }
+    public required string Description { get; init; }
+    public required string FeaturedImage { get; init; }
+    public required string Size { get; init; }
 
     public AisleLocation? AisleLocation { get; set; }
 }

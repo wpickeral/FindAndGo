@@ -13,10 +13,10 @@ public class ProductController : Controller
 
         var searchTerm = HttpContext.Request.Query["searchTerm"];
         var locationId = HttpContext.Request.Query["locationId"];
-        var fullfillment = "ais"; // available in store
+        const string fulfillment = "ais"; // available in store
 
         var productSearchUrl =
-            $"https://api-ce.kroger.com/v1/products?filter.term={searchTerm}&filter.locationId={locationId}&filter.fulfillment={fullfillment}";
+            $"https://api-ce.kroger.com/v1/products?filter.term={searchTerm}&filter.locationId={locationId}&filter.fulfillment={fulfillment}";
 
         var client = new HttpClient();
         var token = Request.Cookies["token"];

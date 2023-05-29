@@ -2,12 +2,12 @@ namespace FindAndGo.Models;
 
 public class StoreModel
 {
-    public string LocationId { get; set; }
-    public string Address { get; set; }
-    public string City { get; set; }
-    public string State { get; set; }
-    public string ZipCode { get; set; }
-    public string Name { get; set; }
-    public string Latitude { get; set; }
-    public string Longitude { get; set; }
+    public required string LocationId { get; set; }
+    public required string Address { get; set; }
+    public required string City { get; set; }
+    public required string State { get; set; }
+    public required string ZipCode { get; set; }
+    public required string Name { get; set; }
+    public required string Latitude { get; set; }
+    public required string Longitude { get; set; }
 }
