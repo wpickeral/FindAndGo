@@ -7,19 +7,18 @@
 <div class="bg-white">
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <div class="md:flex md:items-center md:justify-between">
-            <h2 class="text-2xl font-bold tracking-tight text-gray-900">Trending products</h2>
-            <a href="#" class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
-                Shop the collection
+            <h2 class="text-2xl font-bold tracking-tight text-gray-900">Search Results</h2>
+            <a asp-controller="StoreDetails" asp-action="Index" class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
+                Find more products
                 <span aria-hidden="true"> &rarr;</span>
             </a>
         </div>
 
-        <div class="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
-
+        <div class="mt-6 grid grid-cols-2 gap-x-10 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
             @foreach (var product in @Model)
             {
                 <div class="group relative">
-                    <div class="h-56 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-72 xl:h-80">
+                    <div class="h-56 w-full overflow-hidden rounded-md bg-gray-200  lg:h-72 xl:h-80">
                         <img src="@product.FeaturedImage" alt="Hand stitched, orange leather long wallet." class="h-full w-full object-cover object-center">
                     </div>
                     <h3 class="mt-4 text-sm text-gray-700">
@@ -28,7 +27,7 @@
                     <p class="mt-1 text-sm text-gray-500">@product.Size</p>
                     @if (@product.AisleLocation != null)
                     {
-                        <p class="mt-1 text-sm font-medium text-emerald-500">@product.AisleLocation.Description</p>
+                        <p class="mt-1 text-sm font-bold text-emerald-500">@product.AisleLocation.Description</p>
                     }
                     else
                     {
