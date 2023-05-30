@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using FindAndGo.Models;
+using FindAndGo.Services;
 using Newtonsoft.Json.Linq;
 
 
@@ -21,9 +22,12 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {
         // If the access token is null we get a new token and and set it to the AccessToken
-        AccessToken ??= await new TokenService().GetAccessToken();
+        if (AccessToken == null)
+        {
+            AccessToken = await new TokenService().GetAccessToken();
+            if (AccessToken != null) Response.Cookies.Append("token", AccessToken.ToString());
+        }
 
-        Response.Cookies.Append("token", AccessToken.ToString());
         return View();
     }
 

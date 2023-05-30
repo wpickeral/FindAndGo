@@ -1,9 +1,9 @@
 using System.Net;
 using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Mvc;
+using FindAndGo.Models;
 using Newtonsoft.Json.Linq;
 
-namespace FindAndGo.Models;
+namespace FindAndGo.Services;
 
 public class TokenService : ITokenService
 {
@@ -15,6 +15,7 @@ public class TokenService : ITokenService
         var client = new HttpClient();
         var clientId = Environment.GetEnvironmentVariable("KROGER_CLIENT_ID");
         var clientSecret = Environment.GetEnvironmentVariable("KROGER_CLIENT_SECRET");
+        var grant = "client_credentials";
         // Create the auth string according to Kroger API requirements:
         // https://developer.kroger.com/reference#operation/authorizationCode
         var authString = $"{clientId}:{clientSecret}";
@@ -26,7 +27,7 @@ public class TokenService : ITokenService
 
         // Create the scopes object to include with the post request
         var body = new List<KeyValuePair<string, string>>();
-        var grantType = new KeyValuePair<string, string>("grant_type", "client_credentials");
+        var grantType = new KeyValuePair<string, string>("grant_type", grant);
         var scope = new KeyValuePair<string, string>("scope", "product.compact"); // provides access to /product
         // No scope required to access /location
         body.Add(grantType);
@@ -38,6 +39,7 @@ public class TokenService : ITokenService
         {
             var results = getAccessToken.Content.ReadAsStringAsync().Result;
             var tokenResponse = JObject.Parse(results);
+            Console.WriteLine(tokenResponse);
             return tokenResponse["access_token"];
         }
 
