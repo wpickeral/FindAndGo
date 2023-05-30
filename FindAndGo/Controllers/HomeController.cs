@@ -21,18 +21,12 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {
         // If the access token is null we get a new token and and set it to the AccessToken
-        AccessToken ??= await new Auth().GetAccessToken();
+        AccessToken ??= await new TokenService().GetAccessToken();
 
         Response.Cookies.Append("token", AccessToken.ToString());
         return View();
     }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

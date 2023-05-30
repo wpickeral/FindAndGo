@@ -1,9 +1,10 @@
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
 namespace FindAndGo.Models;
 
-public class Auth
+public class TokenService : ITokenService
 {
     private const string AccessTokenUrl = "https://api-ce.kroger.com/v1/connect/oauth2/token";
     private const string RefreshTokenUrl = "";
@@ -36,6 +37,8 @@ public class Auth
         {
             var results = getAccessToken.Content.ReadAsStringAsync().Result;
             var tokenResponse = JObject.Parse(results);
+            Console.WriteLine("Token");
+            Console.WriteLine(tokenResponse);
             return tokenResponse["access_token"];
         }
         else
