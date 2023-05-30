@@ -5,45 +5,53 @@
 }
 
 <div class="bg-white">
-    <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
-        <div class="md:flex md:items-center md:justify-between mb-16 items-center">
-            <h2 class="text-xl font-bold tracking-tight text-gray-900">Search Results</h2>
-            <form class="w-96 mx-auto flex items-center gap-3" asp-controller="Product" asp-action="Search" method="post">
-                <input type="hidden" id="locationId" name="locationId" value="@Context.Request.Cookies["locationId"]"/>
-                <label for="searchTerm" class="ml-px block pl-4 text-sm font-medium leading-6 text-gray-700 sr-only"></label>
-                <input id="searchTerm" name="searchTerm" required class="text-lg block w-full rounded-full border-0 px-4 text-xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter a product">
-                <button type="submit" class="flex rounded-full bg-indigo-600 p-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
-                    </svg>
-                </button>
-            </form>
-            <a asp-controller="Home" asp-action="Index" class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
-                Select a different Kroger
-                <span aria-hidden="true"> &rarr;</span>
-            </a>
-        </div>
-        <div class="mt-6 grid grid-cols-2 gap-x-10 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
-            @foreach (var product in @Model)
-            {
-                <div class="group relative">
-                    <div class="h-56 w-full overflow-hidden rounded-md lg:h-72 xl:h-80">
-                        <img src="@product.FeaturedImage" alt="Hand stitched, orange leather long wallet." class="h-full w-full object-cover object-center">
+
+    @if (!@Model.Any())
+    {
+        <h2 class="text-xl font-bold tracking-tight text-gray-900">No results found</h2>
+    }
+    else
+    {
+        <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
+            <div class="md:flex md:items-center md:justify-between mb-16 items-center">
+                <h2 class="text-xl font-bold tracking-tight text-gray-900">Search Results</h2>
+                <form class="w-96 mx-auto flex items-center gap-3" asp-controller="Product" asp-action="Search" method="post">
+                    <input type="hidden" id="locationId" name="locationId" value="@Model.First().LocationId"/>
+                    <label for="searchTerm" class="ml-px block pl-4 text-sm font-medium leading-6 text-gray-700 sr-only"></label>
+                    <input id="searchTerm" name="searchTerm" required class="text-lg block w-full rounded-full border-0 px-4 text-xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter a product">
+                    <button type="submit" class="flex rounded-full bg-indigo-600 p-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                        </svg>
+                    </button>
+                </form>
+                <a asp-controller="Home" asp-action="Index" class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
+                    Select a different Kroger
+                    <span aria-hidden="true"> &rarr;</span>
+                </a>
+            </div>
+            <div class="mt-6 grid grid-cols-2 gap-x-10 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
+                @foreach (var product in @Model)
+                {
+                    <div class="group relative">
+                        <div class="h-56 w-full overflow-hidden rounded-md lg:h-72 xl:h-80">
+                            <img src="@product.FeaturedImage" alt="Hand stitched, orange leather long wallet." class="h-full w-full object-cover object-center">
+                        </div>
+                        <h3 class="mt-4 text-sm text-gray-700">
+                            @product.Description
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">@product.Size</p>
+                        @if (@product.AisleLocation != null)
+                        {
+                            <p class="mt-1 text-sm font-bold text-emerald-500">@product.AisleLocation.Description</p>
+                        }
+                        else
+                        {
+                            <p class="mt-1 text-sm font-medium text-gray-900">Location not available</p>
+                        }
                     </div>
-                    <h3 class="mt-4 text-sm text-gray-700">
-                        @product.Description
-                    </h3>
-                    <p class="mt-1 text-sm text-gray-500">@product.Size</p>
-                    @if (@product.AisleLocation != null)
-                    {
-                        <p class="mt-1 text-sm font-bold text-emerald-500">@product.AisleLocation.Description</p>
-                    }
-                    else
-                    {
-                        <p class="mt-1 text-sm font-medium text-gray-900">Location not available</p>
-                    }
-                </div>
-            }
+                }
+            </div>
         </div>
-    </div>
+    }
 </div>

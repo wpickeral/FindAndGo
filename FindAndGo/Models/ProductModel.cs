@@ -5,6 +5,7 @@ namespace FindAndGo.Models;
 public class ProductModel
 {
     public required string ProductId { get; init; }
+    public required string LocationId { get; init; }
     public required string Description { get; init; }
     public required string FeaturedImage { get; init; }
     public required string Size { get; init; }
@@ -33,12 +34,14 @@ public class ProductModel
 
         var products = new List<ProductModel>();
 
+        Console.WriteLine("Products Controller");
         Console.WriteLine(resultsAsJson);
 
         foreach (var prod in resultsAsJson)
         {
             var product = new ProductModel
             {
+                LocationId = locationId.ToString(),
                 ProductId = prod["productId"].ToString(),
                 Description = prod["description"].ToString(),
                 // The first item in the array is the featured imaged
