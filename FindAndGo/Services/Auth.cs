@@ -5,8 +5,8 @@ namespace FindAndGo.Models;
 
 public class Auth
 {
-    private const string _accessTokenUrl = "https://api-ce.kroger.com/v1/connect/oauth2/token";
-    private const string _refreshTokenUrl = "";
+    private const string AccessTokenUrl = "https://api-ce.kroger.com/v1/connect/oauth2/token";
+    private const string RefreshTokenUrl = "";
 
     public async Task<JToken?> GetAccessToken()
     {
@@ -30,7 +30,7 @@ public class Auth
         body.Add(grantType);
         body.Add(scope);
 
-        var getAccessToken = await client.PostAsync(_accessTokenUrl, new FormUrlEncodedContent(body));
+        var getAccessToken = await client.PostAsync(AccessTokenUrl, new FormUrlEncodedContent(body));
 
         if (getAccessToken.IsSuccessStatusCode)
         {
