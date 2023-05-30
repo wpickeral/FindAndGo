@@ -9,6 +9,8 @@ public class ProductModel
     public required string Description { get; init; }
     public required string FeaturedImage { get; init; }
     public required string Size { get; init; }
+    public decimal RegularPrice { get; set; }
+    public decimal PromoPrice { get; set; }
 
     public AisleLocation? AisleLocation { get; set; }
 
@@ -46,7 +48,7 @@ public class ProductModel
                 Description = prod["description"].ToString(),
                 // The first item in the array is the featured imaged
                 FeaturedImage = prod["images"][0]["sizes"][1]["url"].ToString(), // large size
-                Size = prod["items"][0]["size"].ToString()
+                Size = prod["items"][0]["size"].ToString(),
             };
 
             var aisleLocations = prod["aisleLocations"];
@@ -58,6 +60,13 @@ public class ProductModel
                 };
 
                 product.AisleLocation = aisleLocation;
+            }
+
+            var price = prod["items"][0]["price"];
+            if (price != null)
+            {
+                product.RegularPrice = decimal.Parse(price["regular"].ToString());
+                product.PromoPrice = decimal.Parse(price["promo"].ToString());
             }
 
             products.Add(product);

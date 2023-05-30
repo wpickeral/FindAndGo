@@ -37,18 +37,33 @@
                         <div class="h-56 w-full overflow-hidden rounded-md lg:h-72 xl:h-80">
                             <img src="@product.FeaturedImage" alt="Hand stitched, orange leather long wallet." class="h-full w-full object-cover object-center">
                         </div>
-                        <h3 class="mt-4 text-sm text-gray-700">
-                            @product.Description
-                        </h3>
-                        <p class="my-1 text-sm text-gray-500">@product.Size</p>
-                        @if (@product.AisleLocation != null)
+                        @if (product.PromoPrice != 0)
                         {
-                            <span class="inline-flex items-center rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">@product.AisleLocation.Description</span>
+                            <div class="flex gap-3 mt-6">
+                                <p class="line-through text-sm text-gray-500">@product.RegularPrice</p>
+                                <p class="text-sm text-gray-500 font-bold">@product.PromoPrice</p>
+                            </div>
                         }
                         else
                         {
-                            <span class="inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">Location not available</span>
+                            <p class="mt-6 text-sm text-gray-500 font-bold">@product.RegularPrice</p>
                         }
+                        <h3 class="text-sm text-gray-700">
+                            @product.Description
+                        </h3>
+                        <p class="mt-1 mb-2 text-sm text-gray-500">@product.Size</p>
+
+                        <div class="flex gap-4">
+
+                            @if (@product.AisleLocation != null)
+                            {
+                                <span class="inline-flex items-center rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">@product.AisleLocation.Description</span>
+                            }
+                            else
+                            {
+                                <span class="inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">Location not available</span>
+                            }
+                        </div>
                     </div>
                 }
             </div>
