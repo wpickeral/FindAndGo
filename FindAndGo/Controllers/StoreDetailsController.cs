@@ -1,6 +1,5 @@
 using FindAndGo.Models;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 
 namespace FindAndGo.Controllers;
 
