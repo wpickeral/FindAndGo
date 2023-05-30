@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
@@ -6,7 +7,7 @@ namespace FindAndGo.Models;
 
 public class TokenService : ITokenService
 {
-    private const string AccessTokenUrl = "https://api-ce.kroger.com/v1/connect/oauth2/token";
+    private const string AccessTokenUrl = "https://api.kroger.com/v1/connect/oauth2/token";
     private const string RefreshTokenUrl = "";
 
     public async Task<JToken?> GetAccessToken()
@@ -37,15 +38,16 @@ public class TokenService : ITokenService
         {
             var results = getAccessToken.Content.ReadAsStringAsync().Result;
             var tokenResponse = JObject.Parse(results);
-            Console.WriteLine("Token");
-            Console.WriteLine(tokenResponse);
             return tokenResponse["access_token"];
         }
-        else
+
+        if (getAccessToken.StatusCode == HttpStatusCode.Unauthorized)
         {
-            Console.WriteLine("Error getting access token");
+            // Refresh token
             return null;
         }
+
+        return null;
     }
 
     private static string StringToBase64String(string str)

@@ -17,7 +17,7 @@ public class StoreController : Controller
 
         var zipCode = HttpContext.Request.Form["ZipCode"];
         var locationListUrl =
-            $"https://api-ce.kroger.com/v1/locations?filter.chain={Chain}&filter.zipCode.near={zipCode}&filter.radiusInMiles={RadiusInMiles}&filter.limit={Limit}";
+            $"https://api.kroger.com/v1/locations?filter.chain={Chain}&filter.zipCode.near={zipCode}&filter.radiusInMiles={RadiusInMiles}&filter.limit={Limit}";
 
         var token = Request.Cookies["token"];
 

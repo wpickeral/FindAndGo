@@ -11,7 +11,7 @@ public class StoreDetailsController : Controller
     {
         var client = new HttpClient();
         var token = Request.Cookies["token"];
-        var locationDetailsUrl = $"https://api-ce.kroger.com/v1/locations/{id}";
+        var locationDetailsUrl = $"https://api.kroger.com/v1/locations/{id}";
         client.DefaultRequestHeaders.Clear();
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 

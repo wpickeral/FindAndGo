@@ -21,7 +21,7 @@ public class ProductModel
         const string fulfillment = "ais"; // available in store
 
         var productSearchUrl =
-            $"https://api-ce.kroger.com/v1/products?filter.term={searchTerm}&filter.locationId={locationId}&filter.fulfillment={fulfillment}";
+            $"https://api.kroger.com/v1/products?filter.term={searchTerm}&filter.locationId={locationId}&filter.fulfillment={fulfillment}";
 
         var client = new HttpClient();
         var token = httpContext.Request.Cookies["token"];
