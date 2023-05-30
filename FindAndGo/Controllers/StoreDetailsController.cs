@@ -32,12 +32,4 @@ public class StoreDetailsController : Controller
 
         return View(storeModel);
     }
-
-    [HttpPost]
-    public async Task<IActionResult> Search()
-    {
-        var locationId = HttpContext.Request.Form["locationId"];
-        var searchTerm = HttpContext.Request.Form["searchTerm"];
-        return Redirect($"/Product?locationId={locationId}&searchTerm={searchTerm}");
-    }
 }
