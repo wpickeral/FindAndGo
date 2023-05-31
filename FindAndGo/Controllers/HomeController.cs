@@ -2,18 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using FindAndGo.Models;
 using FindAndGo.Services;
-using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json.Linq;
-
 
 namespace FindAndGo.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-
-    private static JToken? AccessToken { get; set; }
-    private static JToken? RefreshToken { get; set; }
 
     public HomeController(ILogger<HomeController> logger)
     {
