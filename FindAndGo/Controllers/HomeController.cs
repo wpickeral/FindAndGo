@@ -21,14 +21,27 @@ public class HomeController : Controller
         // No token available
         if (token == null)
         {
-            var newTokenRequest = await new TokenService().GetAccessToken();
-            var newToken = newTokenRequest["access_token"];
-            var newTokenExpiresIn = int.Parse(newTokenRequest["expires_in"].ToString());
+            try
+            {
+                var newTokenRequest = await new TokenService().GetAccessToken();
+                var newToken = newTokenRequest["access_token"];
+                var newTokenExpiresIn = int.Parse(newTokenRequest["expires_in"].ToString());
 
-            var cookieOptions = new CookieOptions();
-            cookieOptions.Expires = DateTimeOffset.Now.AddSeconds(newTokenExpiresIn);
+                var cookieOptions = new CookieOptions();
+                cookieOptions.Expires = DateTimeOffset.Now.AddSeconds(newTokenExpiresIn);
 
-            HttpContext.Response.Cookies.Append("find-and-go.token", newToken.ToString(), cookieOptions);
+                HttpContext.Response.Cookies.Append("find-and-go.token", newToken.ToString(), cookieOptions);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine(e);
+                return Error();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return Error();
+            }
         }
 
         return View();
