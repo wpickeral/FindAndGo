@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using FindAndGo.Models;
 using Newtonsoft.Json.Linq;
 
@@ -10,12 +11,14 @@ public class TokenService : ITokenService
     private const string AccessTokenUrl = "https://api.kroger.com/v1/connect/oauth2/token";
     private const string RefreshTokenUrl = "";
 
-    public async Task<JToken?> GetAccessToken()
+    public async Task<JObject> GetAccessToken(Boolean refresh = false)
     {
         var client = new HttpClient();
         var clientId = Environment.GetEnvironmentVariable("KROGER_CLIENT_ID");
         var clientSecret = Environment.GetEnvironmentVariable("KROGER_CLIENT_SECRET");
-        var grant = "client_credentials";
+
+        var grant = refresh ? "refresh_token" : "client_credentials";
+
         // Create the auth string according to Kroger API requirements:
         // https://developer.kroger.com/reference#operation/authorizationCode
         var authString = $"{clientId}:{clientSecret}";
@@ -40,16 +43,10 @@ public class TokenService : ITokenService
             var results = getAccessToken.Content.ReadAsStringAsync().Result;
             var tokenResponse = JObject.Parse(results);
             Console.WriteLine(tokenResponse);
-            return tokenResponse["access_token"];
+            return tokenResponse;
         }
 
-        if (getAccessToken.StatusCode == HttpStatusCode.Unauthorized)
-        {
-            // Refresh token
-            return null;
-        }
-
-        return null;
+        return new JObject();
     }
 
     private static string StringToBase64String(string str)

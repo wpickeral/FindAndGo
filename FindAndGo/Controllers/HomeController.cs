@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using FindAndGo.Models;
 using FindAndGo.Services;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
 
 
@@ -21,11 +22,19 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        // If the access token is null we get a new token and and set it to the AccessToken
-        if (AccessToken == null)
+        var token = HttpContext.Request.Cookies["find-and-go.token"];
+
+        // No token available
+        if (token == null)
         {
-            AccessToken = await new TokenService().GetAccessToken();
-            if (AccessToken != null) Response.Cookies.Append("token", AccessToken.ToString());
+            var newTokenRequest = await new TokenService().GetAccessToken();
+            var newToken = newTokenRequest["access_token"];
+            var newTokenExpiresIn = int.Parse(newTokenRequest["expires_in"].ToString());
+
+            var cookieOptions = new CookieOptions();
+            cookieOptions.Expires = DateTimeOffset.Now.AddSeconds(newTokenExpiresIn);
+
+            HttpContext.Response.Cookies.Append("find-and-go.token", newToken.ToString(), cookieOptions);
         }
 
         return View();

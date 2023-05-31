@@ -27,7 +27,7 @@ public class ProductModel
             $"https://api.kroger.com/v1/products?filter.term={searchTerm}&filter.locationId={locationId}&filter.fulfillment={fulfillment}";
 
         var client = new HttpClient();
-        var token = httpContext.Request.Cookies["token"];
+        var token = httpContext.Request.Cookies["find-and-go.token"];
         client.DefaultRequestHeaders.Clear();
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 

@@ -25,7 +25,7 @@ public class StoreModel
         var locationListUrl =
             $"https://api.kroger.com/v1/locations?filter.chain={Chain}&filter.zipCode.near={zipCode}&filter.radiusInMiles={RadiusInMiles}&filter.limit={Limit}";
 
-        var token = httpContext.Request.Cookies["token"];
+        var token = httpContext.Request.Cookies["find-and-go.token"];
 
         var client = new HttpClient();
         client.DefaultRequestHeaders.Clear();
@@ -67,7 +67,7 @@ public class StoreModel
     public static async Task<StoreModel> GetStoreDetails(HttpContext httpContext, string id)
     {
         var client = new HttpClient();
-        var token = httpContext.Request.Cookies["token"];
+        var token = httpContext.Request.Cookies["find-and-go.token"];
         var locationDetailsUrl = $"https://api.kroger.com/v1/locations/{id}";
         client.DefaultRequestHeaders.Clear();
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");

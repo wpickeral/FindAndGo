@@ -1,8 +1,8 @@
 using Newtonsoft.Json.Linq;
 
-namespace FindAndGo.Models;
+namespace FindAndGo.Services;
 
 public interface ITokenService
 {
-    public Task<JToken?> GetAccessToken();
+    public Task<JObject?> GetAccessToken(Boolean refresh);
 }
