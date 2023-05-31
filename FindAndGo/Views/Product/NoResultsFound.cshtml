@@ -1,0 +1,21 @@
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <div class="text-center">
+        <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">No results found</h1>
+        <p class="mt-6 text-base leading-7 text-gray-600">Sorry, we couldn&apos;t find any results for "@ViewBag.SearchTerm". Check the spelling or a try a new search term.</p>
+        <form class="w-96 mx-auto flex items-center gap-3 mt-8" asp-controller="Product" asp-action="Search" method="post">
+            <input type="hidden" id="locationId" name="locationId" value="@ViewBag.LocationId"/>
+            <label for="searchTerm" class="ml-px block pl-4 text-sm font-medium leading-6 text-gray-700 sr-only"></label>
+            <input id="searchTerm" name="searchTerm" required class="text-lg block w-full rounded-full border-0 px-4 text-xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter a product">
+            <button type="submit" class="flex rounded-full bg-indigo-600 p-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+</main>

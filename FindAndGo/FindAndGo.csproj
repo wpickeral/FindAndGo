@@ -18,5 +18,8 @@
       <PackageReference Include="JObject" Version="1.0.0" />
       <PackageReference Include="System.Net.Http.Json" Version="8.0.0-preview.4.23259.5" />
     </ItemGroup>
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Product\NoResultsFound.cshtml" />
+    </ItemGroup>
 
 </Project>
