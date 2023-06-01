@@ -12,7 +12,7 @@ public class ProductController : Controller
     public async Task<IActionResult> Index([FromQuery] string locationId, string searchTerm)
     {
         var token = HttpContext.Request.Cookies["find-and-go.token"];
-        if (token == null) return View("PageNotFound");
+        if (token == null) return View("SessionExpired");
 
         try
         {
