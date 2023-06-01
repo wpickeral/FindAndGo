@@ -7,11 +7,10 @@ namespace FindAndGo.Controllers;
 
 public class ProductController : Controller
 {
-    // GET
-    public async Task<IActionResult> Index()
+    // GE
+    [HttpGet]
+    public async Task<IActionResult> Index([FromQuery] string locationId, string searchTerm)
     {
-        var searchTerm = HttpContext.Request.Query["searchTerm"].ToString();
-        var locationId = HttpContext.Request.Query["locationId"].ToString();
         var token = HttpContext.Request.Cookies["find-and-go.token"];
         if (token == null) return View("PageNotFound");
 
@@ -24,16 +23,19 @@ public class ProductController : Controller
         catch (Exception exception)
         {
             Console.WriteLine(exception);
-            return View("PageNotFound");
+            var routeValues = new List<KeyValuePair<string, string>>
+            {
+                new("searchTerm", searchTerm),
+                new("locationId", locationId),
+            };
+
+            return RedirectToAction("NoResultsFound", routeValues);
         }
     }
 
     [HttpPost]
-    public async Task<IActionResult> Search()
+    public IActionResult Search([FromForm] string locationId, string searchTerm)
     {
-        var locationId = HttpContext.Request.Form["locationId"];
-        var searchTerm = HttpContext.Request.Form["searchTerm"];
-
         return Redirect($"/Product?locationId={locationId}&searchTerm={searchTerm}");
     }
 
