@@ -1,7 +1,4 @@
-using System.Net;
 using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
-using FindAndGo.Models;
 using Newtonsoft.Json.Linq;
 
 namespace FindAndGo.Services;
@@ -9,9 +6,8 @@ namespace FindAndGo.Services;
 public class TokenService : ITokenService
 {
     private const string AccessTokenUrl = "https://api.kroger.com/v1/connect/oauth2/token";
-    private const string RefreshTokenUrl = "";
 
-    public async Task<JObject> GetAccessToken()
+    public async Task<JObject?> GetAccessToken()
     {
         var client = new HttpClient();
         var clientId = Environment.GetEnvironmentVariable("KROGER_CLIENT_ID");
@@ -44,26 +40,7 @@ public class TokenService : ITokenService
             return tokenResponse;
         }
 
-        return new JObject();
-    }
-
-    private static CookieOptions BuildCookieOptions(int expiresIn)
-    {
-        var cookieOptions = new CookieOptions();
-        cookieOptions.Expires = DateTimeOffset.Now.AddSeconds(expiresIn);
-
-        return cookieOptions;
-    }
-
-    public static void SetTokenAsCookie(JObject newTokenRequest, HttpContext httpContext)
-    {
-        var newToken = newTokenRequest["access_token"].ToString();
-        // Parse the MaxAge
-        var expiresIn = int.Parse(newTokenRequest["expires_in"].ToString());
-        // Build the cookie options object
-        var cookieOptions = BuildCookieOptions(expiresIn);
-        // Added the token to the cookies with the options
-        httpContext.Response.Cookies.Append("find-and-go.token", newToken, cookieOptions);
+        return null;
     }
 
     private static string StringToBase64String(string str)

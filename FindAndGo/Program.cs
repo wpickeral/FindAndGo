@@ -1,3 +1,5 @@
+using FindAndGo.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,5 +25,35 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Middleware to get a new authorization token from the Kroger API if it has expired
+app.Use(async (context, next) =>
+{
+    var token = context.Request.Cookies["find-and-go.token"];
+
+    if (token == null)
+    {
+        try
+        {
+            // Request a new token
+            var newTokenRequest = await new TokenService().GetAccessToken();
+            // Parse the access_token
+            var newToken = newTokenRequest["access_token"].ToString();
+            // Parse the MaxAge
+            var expiresIn = int.Parse(newTokenRequest["expires_in"].ToString());
+            // Build the cookie options object
+            var cookieOptions = new CookieOptions();
+            cookieOptions.Expires = DateTimeOffset.Now.AddSeconds(expiresIn);
+            // Add the token to the cookies object with the options
+            context.Response.Cookies.Append("find-and-go.token", newToken, cookieOptions);
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    await next.Invoke();
+});
 
 app.Run();

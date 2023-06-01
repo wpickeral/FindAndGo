@@ -19,7 +19,6 @@ public class ProductModel
     {
         //  https://developer.kroger.com/reference#operation/productGet
 
-
         const string fulfillment = "ais"; // available in store
 
         var productSearchUrl =
@@ -38,7 +37,7 @@ public class ProductModel
         {
             var product = new ProductModel
             {
-                LocationId = locationId.ToString(),
+                LocationId = locationId,
                 ProductId = prod["productId"].ToString(),
                 Description = prod["description"].ToString(),
                 // The first item in the array is the featured imaged
