@@ -47,10 +47,10 @@ public class TokenService : ITokenService
         return new JObject();
     }
 
-    public static CookieOptions BuildCookieOptions(int expires_in)
+    private static CookieOptions BuildCookieOptions(int expiresIn)
     {
         var cookieOptions = new CookieOptions();
-        cookieOptions.Expires = DateTimeOffset.Now.AddSeconds(expires_in);
+        cookieOptions.Expires = DateTimeOffset.Now.AddSeconds(expiresIn);
 
         return cookieOptions;
     }
