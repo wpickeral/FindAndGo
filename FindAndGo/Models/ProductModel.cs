@@ -15,19 +15,17 @@ public class ProductModel
     public AisleLocation? AisleLocation { get; set; }
 
 
-    public static async Task<IEnumerable<ProductModel>> GetProducts(HttpContext httpContext)
+    public static async Task<IEnumerable<ProductModel>> GetProducts(string searchTerm, string locationId, string token)
     {
         //  https://developer.kroger.com/reference#operation/productGet
 
-        var searchTerm = httpContext.Request.Query["searchTerm"];
-        var locationId = httpContext.Request.Query["locationId"];
+
         const string fulfillment = "ais"; // available in store
 
         var productSearchUrl =
             $"https://api.kroger.com/v1/products?filter.term={searchTerm}&filter.locationId={locationId}&filter.fulfillment={fulfillment}";
 
         var client = new HttpClient();
-        var token = httpContext.Request.Cookies["find-and-go.token"];
         client.DefaultRequestHeaders.Clear();
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
@@ -35,9 +33,6 @@ public class ProductModel
         var resultsAsJson = JObject.Parse(getLocations)["data"];
 
         var products = new List<ProductModel>();
-
-        Console.WriteLine("Products Controller");
-        Console.WriteLine(resultsAsJson);
 
         foreach (var prod in resultsAsJson)
         {

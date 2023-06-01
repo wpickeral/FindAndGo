@@ -25,11 +25,8 @@ public class HomeController : Controller
             {
                 var newTokenRequest = await new TokenService().GetAccessToken();
                 var newToken = newTokenRequest["access_token"];
-                var newTokenExpiresIn = int.Parse(newTokenRequest["expires_in"].ToString());
-
-                var cookieOptions = new CookieOptions();
-                cookieOptions.Expires = DateTimeOffset.Now.AddSeconds(newTokenExpiresIn);
-
+                var expiresIn = int.Parse(newTokenRequest["expires_in"].ToString());
+                var cookieOptions = TokenService.BuildCookieOptions(expiresIn);
                 HttpContext.Response.Cookies.Append("find-and-go.token", newToken.ToString(), cookieOptions);
             }
             catch (HttpRequestException e)

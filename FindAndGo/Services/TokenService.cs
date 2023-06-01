@@ -42,16 +42,24 @@ public class TokenService : ITokenService
         {
             var results = getAccessToken.Content.ReadAsStringAsync().Result;
             var tokenResponse = JObject.Parse(results);
-            Console.WriteLine(tokenResponse);
             return tokenResponse;
         }
 
         return new JObject();
     }
 
+    public static CookieOptions BuildCookieOptions(int expires_in)
+    {
+        var cookieOptions = new CookieOptions();
+        cookieOptions.Expires = DateTimeOffset.Now.AddSeconds(expires_in);
+
+        return cookieOptions;
+    }
+
     private static string StringToBase64String(string str)
     {
         var authStringTextBytes = System.Text.Encoding.UTF8.GetBytes(str);
+
         return Convert.ToBase64String(authStringTextBytes);
     }
 }
