@@ -28,8 +28,8 @@ public class ProductModel
         client.DefaultRequestHeaders.Clear();
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
-        var getLocations = await client.GetStringAsync(productSearchUrl);
-        var resultsAsJson = JObject.Parse(getLocations)["data"];
+        var GetStores = await client.GetStringAsync(productSearchUrl);
+        var resultsAsJson = JObject.Parse(GetStores)["data"];
 
         var products = new List<ProductModel>();
 

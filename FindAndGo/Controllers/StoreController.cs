@@ -8,7 +8,7 @@ public class StoreController : Controller
     [HttpPost]
     public async Task<IActionResult> Index()
     {
-        var locations = await StoreModel.GetLocations(HttpContext);
-        return View(locations);
+        var stores = await StoreModel.GetStores(HttpContext);
+        return View(stores);
     }
 }

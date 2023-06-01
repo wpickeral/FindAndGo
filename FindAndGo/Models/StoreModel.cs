@@ -17,7 +17,7 @@ public class StoreModel
     public required string Longitude { get; set; }
 
 
-    public static async Task<IEnumerable<StoreModel>> GetLocations(HttpContext httpContext)
+    public static async Task<IEnumerable<StoreModel>> GetStores(HttpContext httpContext)
     {
         // Kroger API Reference: https://developer.kroger.com/reference#operation/SearchLocations
 
@@ -31,9 +31,9 @@ public class StoreModel
         client.DefaultRequestHeaders.Clear();
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
-        var getLocations = await client.GetStringAsync(locationListUrl);
+        var GetStores = await client.GetStringAsync(locationListUrl);
 
-        var resultsAsJson = JObject.Parse(getLocations)["data"].ToArray();
+        var resultsAsJson = JObject.Parse(GetStores)["data"].ToArray();
 
         var locations = new List<StoreModel>();
 
@@ -72,8 +72,8 @@ public class StoreModel
         client.DefaultRequestHeaders.Clear();
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
-        var getLocations = await client.GetStringAsync(locationDetailsUrl);
-        var resultsAsJson = JObject.Parse(getLocations)["data"];
+        var getStores = await client.GetStringAsync(locationDetailsUrl);
+        var resultsAsJson = JObject.Parse(getStores)["data"];
 
         StoreModel storeModel = new StoreModel()
         {
