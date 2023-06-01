@@ -4,5 +4,5 @@ namespace FindAndGo.Services;
 
 public interface ITokenService
 {
-    public Task<JObject?> GetAccessToken(Boolean refresh);
+    public Task<JObject?> GetAccessToken();
 }

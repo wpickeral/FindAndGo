@@ -11,13 +11,12 @@ public class TokenService : ITokenService
     private const string AccessTokenUrl = "https://api.kroger.com/v1/connect/oauth2/token";
     private const string RefreshTokenUrl = "";
 
-    public async Task<JObject> GetAccessToken(Boolean refresh = false)
+    public async Task<JObject> GetAccessToken()
     {
         var client = new HttpClient();
         var clientId = Environment.GetEnvironmentVariable("KROGER_CLIENT_ID");
         var clientSecret = Environment.GetEnvironmentVariable("KROGER_CLIENT_SECRET");
-
-        var grant = refresh ? "refresh_token" : "client_credentials";
+        const string grant = "client_credentials";
 
         // Create the auth string according to Kroger API requirements:
         // https://developer.kroger.com/reference#operation/authorizationCode
@@ -54,6 +53,17 @@ public class TokenService : ITokenService
         cookieOptions.Expires = DateTimeOffset.Now.AddSeconds(expires_in);
 
         return cookieOptions;
+    }
+
+    public static void SetTokenAsCookie(JObject newTokenRequest, HttpContext httpContext)
+    {
+        var newToken = newTokenRequest["access_token"].ToString();
+        // Parse the MaxAge
+        var expiresIn = int.Parse(newTokenRequest["expires_in"].ToString());
+        // Build the cookie options object
+        var cookieOptions = BuildCookieOptions(expiresIn);
+        // Added the token to the cookies with the options
+        httpContext.Response.Cookies.Append("find-and-go.token", newToken, cookieOptions);
     }
 
     private static string StringToBase64String(string str)

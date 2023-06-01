@@ -12,12 +12,11 @@ public class ProductController : Controller
     {
         var searchTerm = HttpContext.Request.Query["searchTerm"].ToString();
         var locationId = HttpContext.Request.Query["locationId"].ToString();
-        var token = HttpContext.Request.Cookies["find-and-go.token"];
-        IEnumerable<ProductModel> products;
 
         try
         {
-            products = await ProductModel.GetProducts(searchTerm, locationId, token);
+            var token = HttpContext.Request.Cookies["find-and-go.token"];
+            var products = await ProductModel.GetProducts(searchTerm, locationId, token);
             return View(products);
         }
         // Initiate the retry logic 
@@ -31,34 +30,40 @@ public class ProductController : Controller
                 case HttpStatusCode.Unauthorized:
                     // Access token is expired
                     // Request a new token and update the cookie
+                    string newToken;
                     try
                     {
                         // Request a new token
                         var newTokenRequest = await new TokenService().GetAccessToken();
-                        var newToken = newTokenRequest["access_token"].ToString();
-                        // Parse the MaxAge
-                        var expiresIn = int.Parse(newTokenRequest["expires_in"].ToString());
-                        // Build the cookie options object
-                        var cookieOptions = TokenService.BuildCookieOptions(expiresIn);
-                        // Added the token to the cookies with the options
-                        HttpContext.Response.Cookies.Append("find-and-go.token", newToken.ToString(), cookieOptions);
+                        TokenService.SetTokenAsCookie(newTokenRequest, HttpContext);
+                        // Assign the access token to newToken so it can be used in the products request below
+                        newToken = newTokenRequest["access_token"].ToString();
+                    }
+                    catch (HttpRequestException error)
+                    {
+                        Console.WriteLine(error);
+                        return View("PageNotFound");
+                    }
 
-                        // If the new access token request is successful 
-                        products = await ProductModel.GetProducts(searchTerm, locationId, newToken);
+                    try
+                    {
+                        // The request for a new token was successful, now we retry our products request with the new access token 
+                        var products = await ProductModel.GetProducts(searchTerm, locationId, newToken);
                         return View(products);
                     }
-                    catch (HttpRequestException Error)
+                    catch (Exception exception)
                     {
-                        Console.WriteLine(Error);
+                        Console.WriteLine(exception);
                         return View("PageNotFound");
                     }
             }
         }
-        catch (Exception e)
+        catch (Exception error)
         {
-            Console.WriteLine(e);
+            Console.WriteLine(error);
         }
 
+        // Something else went wrong
         return View("PageNotFound");
     }
 
