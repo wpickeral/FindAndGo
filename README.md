@@ -21,7 +21,7 @@ To start using FindAndGo, simply follow these steps:
 
 That's it! You can now confidently head to the Kroger store and easily locate your desired product using the aisle information provided by FindAndGo.
 
-Feedback and Support
-We value your feedback and strive to continuously improve FindAndGo. If you encounter any issues or have suggestions for enhancements, please open an issue on our GitHub repository here.
+## Feedback and Support
+If you encounter any issues or have suggestions for enhancements, please open an issue on our GitHub repository here.
 
 Thank you for using FindAndGo! 🛒
