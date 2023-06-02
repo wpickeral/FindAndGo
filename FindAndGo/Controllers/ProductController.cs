@@ -1,6 +1,4 @@
-using System.Net;
 using FindAndGo.Models;
-using FindAndGo.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindAndGo.Controllers;
