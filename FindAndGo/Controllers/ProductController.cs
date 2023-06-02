@@ -7,7 +7,6 @@ namespace FindAndGo.Controllers;
 
 public class ProductController : Controller
 {
-    // GE
     [HttpGet]
     public async Task<IActionResult> Index([FromQuery] string locationId, string searchTerm)
     {
