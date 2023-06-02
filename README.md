@@ -10,16 +10,18 @@ FindAndGo is an ASP.NET web application that seamlessly integrates with the Krog
 ## Getting Started
 To start using FindAndGo, simply follow these steps:
 
-1. Visit the FindAndGo web application by clicking here.
+1. Visit the FindAndGo web application by clicking [here](https://findandgo.azurewebsites.net/).
 2. Upon accessing the application, you will be greeted with a user-friendly search interface.
-3. Enter the name or description of the product you wish to locate in any Kroger store.
-4. Click the "Search" button to initiate the search process.
-5. FindAndGo will communicate with the Kroger public API to fetch the relevant information about the product's location.
-6. Once the search results are retrieved, you will be presented with the aisle number where the product can be found within the Kroger store.
+3. Enter the zip code to get the ten closest Kroger stores.
+4. Choose a Kroger store.
+5. Enter the name or description of the product you wish to locate.
+6. Click the "Find" button to initiate the search process.
+7. FindAndGo will communicate with the Kroger public API to fetch the relevant information about the product's.
+8. Once the search results are retrieved, you will be presented with the top ten products that match your search criteria. The aisle number where the product can be found, along with additional product details such as price and a product photo, will also be displayed.
 
 That's it! You can now confidently head to the Kroger store and easily locate your desired product using the aisle information provided by FindAndGo.
 
 Feedback and Support
 We value your feedback and strive to continuously improve FindAndGo. If you encounter any issues or have suggestions for enhancements, please open an issue on our GitHub repository here.
 
-Thank you for using FindAndGo! Happy shopping! 🛒
+Thank you for using FindAndGo! 🛒
