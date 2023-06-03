@@ -16,6 +16,7 @@
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="JObject" Version="1.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0-preview.4.23259.5" />
       <PackageReference Include="System.Net.Http.Json" Version="8.0.0-preview.4.23259.5" />
     </ItemGroup>
     <ItemGroup>

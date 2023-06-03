@@ -4,9 +4,6 @@ namespace FindAndGo.Models;
 
 public class StoreModel
 {
-    private const string Chain = "Kroger";
-    private const int RadiusInMiles = 10;
-    private const int Limit = 10; // 10 is the default 
     public required string LocationId { get; set; }
     public required string Address { get; set; }
     public required string City { get; set; }
@@ -16,24 +13,9 @@ public class StoreModel
     public required string Latitude { get; set; }
     public required string Longitude { get; set; }
 
-
-    public static async Task<IEnumerable<StoreModel>> GetStores(HttpContext httpContext)
+    public static IEnumerable<StoreModel> Stores(JToken resultsAsJson)
     {
         // Kroger API Reference: https://developer.kroger.com/reference#operation/SearchLocations
-
-        var zipCode = httpContext.Request.Form["ZipCode"];
-        var locationListUrl =
-            $"https://api.kroger.com/v1/locations?filter.chain={Chain}&filter.zipCode.near={zipCode}&filter.radiusInMiles={RadiusInMiles}&filter.limit={Limit}";
-
-        var token = httpContext.Request.Cookies["find-and-go.token"];
-
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Clear();
-        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-
-        var GetStores = await client.GetStringAsync(locationListUrl);
-
-        var resultsAsJson = JObject.Parse(GetStores)["data"].ToArray();
 
         var locations = new List<StoreModel>();
 

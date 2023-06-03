@@ -1,3 +1,4 @@
+using FindAndGo.Services;
 using Newtonsoft.Json.Linq;
 
 namespace FindAndGo.Models;
@@ -15,21 +16,9 @@ public class ProductModel
     public AisleLocation? AisleLocation { get; set; }
 
 
-    public static async Task<IEnumerable<ProductModel>> GetProducts(string searchTerm, string locationId, string token)
+    public static IEnumerable<ProductModel?> Products(JToken resultsAsJson, string locationId)
     {
         //  https://developer.kroger.com/reference#operation/productGet
-
-        const string fulfillment = "ais"; // available in store
-
-        var productSearchUrl =
-            $"https://api.kroger.com/v1/products?filter.term={searchTerm}&filter.locationId={locationId}&filter.fulfillment={fulfillment}";
-
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Clear();
-        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-
-        var GetStores = await client.GetStringAsync(productSearchUrl);
-        var resultsAsJson = JObject.Parse(GetStores)["data"];
 
         var products = new List<ProductModel>();
 
