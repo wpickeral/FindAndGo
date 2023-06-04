@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using System.Globalization
 @model IEnumerable<ProductModel>
 
 @{
@@ -40,13 +41,13 @@
                         @if (product.PromoPrice != 0)
                         {
                             <div class="flex gap-3 mt-6">
-                                <p class="line-through text-sm text-gray-500">@product.RegularPrice.ToString("C2")</p>
-                                <p class="text-sm text-gray-500 font-bold">@product.PromoPrice.ToString("C2")</p>
+                                <p class="line-through text-sm text-gray-500">@product.RegularPrice.ToString("C2", CultureInfo.CurrentCulture)</p>
+                                <p class="text-sm text-gray-500 font-bold">@product.PromoPrice.ToString("C2", CultureInfo.CurrentCulture)</p>
                             </div>
                         }
                         else
                         {
-                            <p class="mt-6 text-sm text-gray-500 font-bold">@product.RegularPrice.ToString("C2")</p>
+                            <p class="mt-6 text-sm text-gray-500 font-bold">@product.RegularPrice.ToString("C2", CultureInfo.CurrentCulture)</p>
                         }
                         <h3 class="text-sm text-gray-700">
                             @product.Description
