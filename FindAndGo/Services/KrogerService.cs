@@ -59,16 +59,14 @@ public class KrogerService : IKrogerService
         _httpClient.BaseAddress = new Uri($"{_baseUrl}{path}");
         _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
         var getStores = await _httpClient.GetStringAsync(_httpClient.BaseAddress.AbsoluteUri);
-        var resultsAsJson = JObject.Parse(getStores)["data"];
-        return resultsAsJson;
+
+        return JObject.Parse(getStores)["data"];
     }
 
 
     public async Task<JToken> GetStores(string chain, int zipCode, int radiusInMiles, int limit,
         string token)
     {
-        // Kroger API Reference: https://developer.kroger.com/reference#operation/SearchLocations
-
         var url =
             $"{_baseUrl}locations?filter.chain={chain}&filter.zipCode.near={zipCode}&filter.radiusInMiles={radiusInMiles}&filter.limit={limit}";
 
@@ -78,6 +76,16 @@ public class KrogerService : IKrogerService
 
         var getStores = await client.GetStringAsync(url);
 
+        return JObject.Parse(getStores)["data"];
+    }
+
+    public async Task<JToken> GetStoreDetails(string id, string token)
+    {
+        var locationDetailsUrl = $"{_baseUrl}locations/{id}";
+        _httpClient.DefaultRequestHeaders.Clear();
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+
+        var getStores = await _httpClient.GetStringAsync(locationDetailsUrl);
         return JObject.Parse(getStores)["data"];
     }
 

@@ -46,17 +46,8 @@ public class StoreModel
         return locations;
     }
 
-    public static async Task<StoreModel> GetStoreDetails(HttpContext httpContext, string id)
+    public static StoreModel StoreDetails(JToken resultsAsJson)
     {
-        var client = new HttpClient();
-        var token = httpContext.Request.Cookies["find-and-go.token"];
-        var locationDetailsUrl = $"https://api.kroger.com/v1/locations/{id}";
-        client.DefaultRequestHeaders.Clear();
-        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-
-        var getStores = await client.GetStringAsync(locationDetailsUrl);
-        var resultsAsJson = JObject.Parse(getStores)["data"];
-
         StoreModel storeModel = new StoreModel()
         {
             LocationId = resultsAsJson["locationId"].ToString(),
