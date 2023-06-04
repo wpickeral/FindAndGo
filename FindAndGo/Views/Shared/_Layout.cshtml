@@ -10,18 +10,18 @@
 <body class="h-full flex flex-col">
 <header class="w-full flex justify-center flex-col items-center mb-5 pb-6 border-b-[1px] border-gray-200">
     <a asp-controller="Home" asp-action="Index">
-        <img class="h-[80px] mt-6" src="~/images/logo.png" alt="Find & Go">
+        <img class="h-[75px] mt-6" src="~/images/logo.png" alt="Find & Go">
     </a>
 </header>
 <main class="mb-auto">
     @RenderBody()
 </main>
-<footer class="text-muted border-t-[1px] border-gray-200 p-4 bg-gray-50">
-    <div class="flex items-center mx-auto">
+<footer class="text-muted border-t-[1px] border-gray-200 p-4">
+    <div class="flex flex-col md:flex-row items-center mx-auto">
         <p class="m-3 text-sm text-gray-600">
             &copy; <span id="copy"></span> - Developed by Will Pickeral
         </p>
-        <div class="flex gap-4 items-center ml-auto">
+        <div class="flex gap-4 items-center mx-auto md:mx-0 md:ml-auto">
             <a href="https://www.linkedin.com/in/williampickeral/" class="transition hover:brightness-125 m-1.5 p-1.5">
                 <span class="sr-only">LinkedIn</span>
                 <svg width="26px" height="30px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
