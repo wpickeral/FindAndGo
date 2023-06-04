@@ -6,7 +6,7 @@ namespace FindAndGo.Services;
 public class KrogerService : IKrogerService
 {
     private IHttpClientFactory _httpClientFactory;
-    private HttpClient _httpClient;
+    private readonly HttpClient _httpClient;
     private static readonly string _baseUrl = "https://api.kroger.com/v1/";
 
     public KrogerService(HttpClient httpClient)
@@ -16,7 +16,6 @@ public class KrogerService : IKrogerService
 
     public async Task<JObject?> GetAccessToken()
     {
-        var client = new HttpClient();
         var clientId = Environment.GetEnvironmentVariable("KROGER_CLIENT_ID");
         var clientSecret = Environment.GetEnvironmentVariable("KROGER_CLIENT_SECRET");
         const string grant = "client_credentials";
@@ -28,8 +27,8 @@ public class KrogerService : IKrogerService
         // Base 64 encode the auth string
         var authStringEncoded = StringToBase64String(authString);
         // Add the authorization header 
-        client.DefaultRequestHeaders.Add("Authorization", $"Basic {authStringEncoded}");
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Basic {authStringEncoded}");
+        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         // Create the scopes object to include with the post request
         var body = new List<KeyValuePair<string, string>>();
@@ -39,7 +38,7 @@ public class KrogerService : IKrogerService
         body.Add(grantType);
         body.Add(scope);
 
-        var getAccessToken = await client.PostAsync(url, new FormUrlEncodedContent(body));
+        var getAccessToken = await _httpClient.PostAsync(url, new FormUrlEncodedContent(body));
 
         if (getAccessToken.IsSuccessStatusCode)
         {
@@ -57,10 +56,13 @@ public class KrogerService : IKrogerService
         var path =
             $"products?filter.term={searchTerm}&filter.locationId={locationId}&filter.fulfillment=ais";
         _httpClient.BaseAddress = new Uri($"{_baseUrl}{path}");
-        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-        var getStores = await _httpClient.GetStringAsync(_httpClient.BaseAddress.AbsoluteUri);
 
-        return JObject.Parse(getStores)["data"];
+        _httpClient.DefaultRequestHeaders.Clear();
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+
+        var getProducts = await _httpClient.GetStringAsync(_httpClient.BaseAddress.AbsoluteUri);
+
+        return JObject.Parse(getProducts)["data"];
     }
 
 
@@ -70,23 +72,22 @@ public class KrogerService : IKrogerService
         var url =
             $"{_baseUrl}locations?filter.chain={chain}&filter.zipCode.near={zipCode}&filter.radiusInMiles={radiusInMiles}&filter.limit={limit}";
 
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Clear();
-        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+        _httpClient.DefaultRequestHeaders.Clear();
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
-        var getStores = await client.GetStringAsync(url);
+        var getStores = await _httpClient.GetStringAsync(url);
 
         return JObject.Parse(getStores)["data"];
     }
 
     public async Task<JToken> GetStoreDetails(string id, string token)
     {
-        var locationDetailsUrl = $"{_baseUrl}locations/{id}";
+        var url = $"{_baseUrl}locations/{id}";
         _httpClient.DefaultRequestHeaders.Clear();
         _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
-        var getStores = await _httpClient.GetStringAsync(locationDetailsUrl);
-        return JObject.Parse(getStores)["data"];
+        var getStoreDetails = await _httpClient.GetStringAsync(url);
+        return JObject.Parse(getStoreDetails)["data"];
     }
 
 
