@@ -1,7 +1,6 @@
 using FindAndGo.Models;
 using FindAndGo.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 
 namespace FindAndGo.Controllers;
 
@@ -14,28 +13,9 @@ public class ProductController : Controller
     [HttpGet]
     public async Task<IActionResult> Index([FromQuery] string locationId, string searchTerm)
     {
-        string? token;
-
-        token = HttpContext.Request.Cookies["find-and-go.token"];
-
-        if (token == null) // Try to get a new token
-        {
-            try
-            {
-                var newTokenRequest = await _krogerService.GetAccessToken();
-                if (newTokenRequest != null)
-                {
-                    ControllerHelpers.AddTokenAsCookieToResponse(newTokenRequest, HttpContext);
-                    token = newTokenRequest["access_token"].ToString();
-                }
-            }
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine(e);
-                return View("PageNotFound");
-            }
-        }
-
+        var token = HttpContext.Request.Cookies["find-and-go.token"];
+        if (token == null) return View("PageNotFound");
+        
         try
         {
             // The request for a new token was successful, now we retry our products request with the new access token 

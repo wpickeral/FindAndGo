@@ -14,20 +14,7 @@ public class StoreController : Controller
     public async Task<IActionResult> Index()
     {
         var token = HttpContext.Request.Cookies["find-and-go.token"];
-
-        if (token == null) // Try to get a new token
-        {
-            try
-            {
-                var newTokenRequest = await _krogerService.GetAccessToken();
-                if (newTokenRequest != null) ControllerHelpers.AddTokenAsCookieToResponse(newTokenRequest, HttpContext);
-            }
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine(e);
-                return View("PageNotFound");
-            }
-        }
+        if (token == null) return View("PageNotFound");
 
         try
         {
