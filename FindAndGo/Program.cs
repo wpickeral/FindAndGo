@@ -1,4 +1,6 @@
 using FindAndGo.Services;
+using FindAndGo.Middleware;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +18,20 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
+
+/* Custom middleware to get a new auth token and set it as a cookie if the cookie in the response.
+
+   There are two possible scenarios where this custom middleware is useful:
+   1. If the user has never accessed this website, as soon as the user visits a webpage the token will be requested
+   2. If the token expires after the max life of the token (30 minutes), a new token will be fetched from the Kroger 
+     api and set as a new cookie. 
+  
+  Additionally, this middleware allows us to place the token refresh logic on every request in one central location,
+  Otherwise, we would have to insert the logic into every Controller/Action that hits the Kroger API*/
+app.UseRequestKrogerAccessToken();
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -27,37 +42,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// // Middleware to get a new authorization token from the Kroger API if it has expired
-// app.Use(async (context, next) =>
-// {
-//     var token = context.Request.Cookies["find-and-go.token"];
-//
-//     if (token == null)
-//     {
-//         try
-//         {
-//             // Request a new token
-//             var newTokenRequest = await new KrogerService().GetAccessToken();
-//             if (newTokenRequest != null)
-//             {
-//                 // Parse the access_token
-//                 var newToken = newTokenRequest["access_token"].ToString();
-//                 // Parse the MaxAge
-//                 var expiresIn = int.Parse(newTokenRequest["expires_in"].ToString());
-//                 // Build the cookie options object
-//                 var cookieOptions = new CookieOptions();
-//                 cookieOptions.Expires = DateTimeOffset.Now.AddSeconds(expiresIn);
-//                 // Add the token to the cookies object with the options
-//                 context.Response.Cookies.Append("find-and-go.token", newToken, cookieOptions);
-//             }
-//         }
-//         catch (HttpRequestException e)
-//         {
-//             Console.WriteLine(e);
-//         }
-//     }
-//
-//     await next.Invoke();
-// });
 
 app.Run();
