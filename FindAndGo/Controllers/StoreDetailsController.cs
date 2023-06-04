@@ -23,7 +23,7 @@ public class StoreDetailsController : Controller
         {
             var storeDetailsRequest = await _krogerService.GetStoreDetails(id, token);
             var storeDetails = StoreModel.StoreDetails(storeDetailsRequest);
-            
+           
             return View(storeDetails);
         }
         catch (Exception e)

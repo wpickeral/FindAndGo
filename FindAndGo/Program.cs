@@ -7,10 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IKrogerService, KrogerService>();
-// Per request middleware dependency
-// https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-7.0&viewFallbackFrom=aspnetcore-2.2#per-request-middleware-dependencies
-builder.Services.AddScoped<IKrogerService, KrogerService>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
