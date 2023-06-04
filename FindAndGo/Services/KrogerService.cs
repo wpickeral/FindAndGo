@@ -76,9 +76,9 @@ public class KrogerService : IKrogerService
         client.DefaultRequestHeaders.Clear();
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
-        var GetStores = await client.GetStringAsync(url);
+        var getStores = await client.GetStringAsync(url);
 
-        return JObject.Parse(GetStores)["data"];
+        return JObject.Parse(getStores)["data"];
     }
 
 
