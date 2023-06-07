@@ -18,7 +18,7 @@ public class StoreController : Controller
 
         try
         {
-            var chain = "Kroger";
+            var chain = ""; // Include all Kroger owned stores
             var radiusInMiles = 10;
             var limit = 10; // 10 is the default 
             int.TryParse(HttpContext.Request.Form["ZipCode"], out var zipCode);
