@@ -18,7 +18,6 @@ public class ProductController : Controller
         
         try
         {
-            // The request for a new token was successful, now we retry our products request with the new access token 
             var productsRequest = await _krogerService.GetProducts(searchTerm, locationId, token);
             var products = ProductModel.Products(productsRequest, locationId);
 
