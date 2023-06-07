@@ -20,7 +20,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-/* Custom middleware to get a new auth token and set it as a cookie if the cookie in the response.
+/* Custom middleware to get a new auth token and set it as a cookie.
 
    There are two possible scenarios where this custom middleware is useful:
    1. If the user has never accessed this website, as soon as the user visits a webpage the token will be requested
