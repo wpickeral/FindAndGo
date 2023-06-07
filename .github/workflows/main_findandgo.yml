@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'FindAndGo'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BFDD54D38BDA4F63AA850DA44BEB69B7 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_164A857D064F4ACA8C3B43FDB928326C }}
           package: .
