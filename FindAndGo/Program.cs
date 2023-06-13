@@ -20,17 +20,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-/* Custom middleware to get a new auth token and set it as a cookie.
-
-   There are two possible scenarios where this custom middleware is useful:
-   1. If the user has never accessed this website, as soon as the user visits a webpage the token will be requested
-   2. If the token expires after the max life of the token (30 minutes), a new token will be fetched from the Kroger 
-     api and set as a new cookie. 
-  
-  Additionally, this middleware allows us to place the token refresh logic on every request in one central location,
-  Otherwise, we would have to insert the logic into every Controller/Action that hits the Kroger API*/
-app.UseRequestKrogerAccessToken();
-
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -41,5 +30,15 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+/* Custom middleware to get a new auth token and set it as a cookie.
+
+   There are two possible scenarios where this custom middleware is useful:
+   1. If the user has never accessed this website, as soon as the user visits a webpage the token will be requested
+   2. If the token expires after the max life of the token (30 minutes), a new token will be fetched from the Kroger 
+     api and set as a new cookie. 
+  
+  Additionally, this middleware allows us to place the token refresh logic on every request in one central location,
+  Otherwise, we would have to insert the logic into every Controller/Action that hits the Kroger API*/
+app.UseRequestKrogerAccessToken();
 
 app.Run();

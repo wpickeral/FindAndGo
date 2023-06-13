@@ -41,6 +41,8 @@ public class KrogerMiddleware
             }
         }
 
-        await _next(httpContext);
+        await _next(httpContext);   
+        
+        Console.WriteLine("One the way back");
     }
 }
