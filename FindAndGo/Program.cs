@@ -39,6 +39,8 @@ app.MapControllerRoute(
   
   Additionally, this middleware allows us to place the token refresh logic on every request in one central location,
   Otherwise, we would have to insert the logic into every Controller/Action that hits the Kroger API*/
-app.UseRequestKrogerAccessToken();
+
+app.UseWhen((context) => !context.Request.Cookies.ContainsKey("find-and-go.token"),
+    (app) => { app.UseRequestKrogerAccessToken(); });
 
 app.Run();
