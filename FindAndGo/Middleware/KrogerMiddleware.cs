@@ -35,7 +35,6 @@ public class KrogerMiddleware
         {
             Console.WriteLine(e);
         }
-
         await _next(httpContext);
     }
 }

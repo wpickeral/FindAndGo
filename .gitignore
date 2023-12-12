@@ -475,7 +475,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-# launchSettings 
-FindAndGo/appsettings.Development.json
-FindAndGo/Properties/launchSettings.json

@@ -7,17 +7,19 @@ public class KrogerService : IKrogerService
 {
     private IHttpClientFactory _httpClientFactory;
     private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
     private static readonly string _baseUrl = "https://api.kroger.com/v1/";
 
-    public KrogerService(HttpClient httpClient)
+    public KrogerService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
+        _configuration = configuration;
     }
 
     public async Task<JObject?> GetAccessToken()
     {
-        var clientId = Environment.GetEnvironmentVariable("KROGER_CLIENT_ID");
-        var clientSecret = Environment.GetEnvironmentVariable("KROGER_CLIENT_SECRET");
+        var clientId = _configuration["Kroger:ClientId"];
+        var clientSecret = _configuration["Kroger:ClientSecret"];
         const string grant = "client_credentials";
         var url = $"{_baseUrl}connect/oauth2/token";
 

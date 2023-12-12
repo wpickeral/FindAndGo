@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IKrogerService, KrogerService>();
+var test = builder.Configuration["Kroger:ClientId"];
 
 var app = builder.Build();
 
